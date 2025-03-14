@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="flex justify-center items-center min-h-screen bg-orange-100 font-sans">
+    <div class="bg-teal-600 w-[375px] h-[667px] rounded-lg shadow-xl">
+        <h1 class="justify-center flex mt-4 text-orange-200 text-[20px]">Todo App</h1>
+        <p id="currentDay" class="text-orange-200 text-m ml-2"></p>
+        <div class="flex flex-col justify-center items-center mt-4">
+            <input type="text" class="rounded-xl px-8 py-2 text-center" placeholder="New List Name">
+            <h2 class="text-white rounded-xl w-40 bg-orange-400 px-4 py-2 cursor-pointer mt-3">Create New List</h2>
+          
+              </div>
+    
+   
+     
+    </div>
+
+<script>
+    //Bugünün tarihini aldım
+    const currentDate = new Date();
+ //Nasıl formatta bir tarih istiyorum.
+ const options = {year : "numeric",month: "long", day: "numeric"}; 
+    const formattedDate = currentDate.toLocaleDateString('en-US', options);
+    //p etiketini bulup içeriisnne formatladığımız tarihi yazdırdık.
+    document.getElementById('currentDay').textContent = formattedDate;
+</script>
+    
+</body>
+</html>
