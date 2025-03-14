@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>toDo App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
-<body class="flex justify-center items-center min-h-screen bg-orange-100 font-sans">
-    <div class="bg-teal-600 w-[375px] h-[667px] rounded-lg shadow-xl">
-        <h1 class="justify-center flex mt-4 text-orange-200 text-[20px]">Todo App</h1>
-        <p id="currentDay" class="text-orange-200 text-m ml-2"></p>
-        <div class="flex flex-col justify-center items-center mt-4">
-            <input type="text" class="rounded-xl px-8 py-2 text-center" placeholder="New List Name">
-            <h2 class="text-white rounded-xl w-40 bg-orange-400 px-4 py-2 cursor-pointer mt-3">Create New List</h2>
-          
-              </div>
-    
-   
-     
+<body class="bg-gray-900 flex justify-center items-center min-h-screen">
+    <div class="w-96 bg-gray-800 p-6 rounded-lg shadow-lg">
+        <input id="listName" type="text" placeholder="New list name..." class="w-full p-2 rounded bg-gray-700 text-white">
+        <button onclick="createList()" class="w-full mt-2 bg-blue-500 text-white p-2 rounded">Create New List</button>
+        <div id="listsContainer" class="mt-4 space-y-4"></div>
     </div>
 
-<script>
-    //Bugünün tarihini aldım
-    const currentDate = new Date();
- //Nasıl formatta bir tarih istiyorum.
- const options = {year : "numeric",month: "long", day: "numeric"}; 
-    const formattedDate = currentDate.toLocaleDateString('en-US', options);
-    //p etiketini bulup içeriisnne formatladığımız tarihi yazdırdık.
-    document.getElementById('currentDay').textContent = formattedDate;
-</script>
-    
+    <script>
+        function createList() {
+            const listName = document.getElementById("listName").value;
+            if (!listName.trim()) return;
+            document.getElementById("listName").value = "";
+
+            const listDiv = document.createElement("div");
+            listDiv.className = "bg-gray-700 p-4 rounded-lg";
+            listDiv.innerHTML = `
+                <h2 class="text-white text-lg font-bold">${listName}</h2>
+                <input type="text" placeholder="Add a new item..." class="w-full p-2 mt-2 rounded bg-gray-600 text-white"/>
+                <button class="w-full mt-2 bg-blue-400 text-white p-2 rounded" onclick="addItem(this)">Add Item</button>
+                <ul class="mt-2 space-y-2"></ul>
+            `;
+            document.getElementById("listsContainer").appendChild(listDiv);
+        }
+
+        function addItem(button) {
+            const input = button.previousElementSibling;
+            const itemText = input.value;
+            if (!itemText.trim()) return;
+            input.value = "";
+
+            const li = document.createElement("li");
+            li.className = "flex justify-between items-center text-white bg-gray-600 p-2 rounded";
+            li.innerHTML = `
+                <span>${itemText}</span>
+                <div>
+                    <button onclick="completeItem(this)" class="bg-green-500 text-white px-3 py-1 rounded">Complete</button>
+                    <button onclick="deleteItem(this)" class="bg-red-500 text-white px-3 py-1 rounded ml-2">Delete</button>
+                </div>
+            `;
+            button.nextElementSibling.appendChild(li);
+        }
+
+        function completeItem(button) {
+            button.parentElement.previousElementSibling.classList.toggle("line-through");
+        }
+
+        function deleteItem(button) {
+            button.parentElement.parentElement.remove();
+        }
+    </script>
 </body>
 </html>
